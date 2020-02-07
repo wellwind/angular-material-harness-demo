@@ -1,0 +1,29 @@
+<mat-form-field>
+  <mat-select
+    placeholder="Action"
+    [(ngModel)]="selectedAction"
+    [disabled]="isDisabled"
+  >
+    <mat-option *ngFor="let action of actions" [value]="action">
+      {{ action }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<button
+  mat-raised-button
+  color="primary"
+  (click)="isDisabled = true"
+  [disabled]="isDisabled"
+>
+  GO
+</button>
+
+<button
+  mat-raised-button
+  color="danger"
+  (click)="isDisabled = false"
+  [disabled]="!isDisabled"
+>
+  Cancel
+</button>
