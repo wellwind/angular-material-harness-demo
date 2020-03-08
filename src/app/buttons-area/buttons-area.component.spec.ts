@@ -1,12 +1,11 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
-
-import { ButtonsAreaComponent } from './buttons-area.component';
-import { By } from '@angular/platform-browser';
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatSelectHarness } from '@angular/material/select/testing';
+import { By } from '@angular/platform-browser';
 import { AppModule } from '../app.module';
+import { ButtonsAreaComponent } from './buttons-area.component';
 
 describe('ButtonsAreaComponent', () => {
   let component: ButtonsAreaComponent;
@@ -17,8 +16,7 @@ describe('ButtonsAreaComponent', () => {
     TestBed.configureTestingModule({
       imports: [AppModule],
       declarations: [ButtonsAreaComponent]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -36,7 +34,9 @@ describe('ButtonsAreaComponent', () => {
     const buttons = fixture.debugElement.queryAll(By.css('button'));
 
     expect(buttons.length).toBe(2);
-    expect((buttons[0].nativeElement as HTMLButtonElement).textContent).toContain('GO');
+    expect(
+      (buttons[0].nativeElement as HTMLButtonElement).textContent
+    ).toContain('GO');
   });
 
   it('should have a [GO] button (harness)', async () => {
@@ -46,30 +46,35 @@ describe('ButtonsAreaComponent', () => {
     expect(await buttons[0].getText()).toContain('GO');
   });
 
-  it('should disable button when click', async () => {
+  it('should disable button', async () => {
     const button = fixture.debugElement.query(By.css('button[color=primary]'));
     const buttonElement = button.nativeElement as HTMLButtonElement;
 
     expect(buttonElement.disabled).toBeFalse();
 
-    button.triggerEventHandler('click', {});
+    component.isDisabled = true;
     fixture.detectChanges();
 
     expect(buttonElement.disabled).toBeTrue();
   });
 
   it('should disable button when click (harness)', async () => {
-    const button = await loader.getHarness(MatButtonHarness.with({ text: 'GO' }));
+    const button = await loader.getHarness(
+      MatButtonHarness.with({ text: 'GO' })
+    );
 
     expect(await button.isDisabled()).toBeFalse();
 
-    await button.click();
+    component.isDisabled = true;
+    fixture.detectChanges();
 
     expect(await button.isDisabled()).toBeTrue();
   });
 
   it('should display Save & Exit options when click select', async () => {
-    const selectTrigger = fixture.debugElement.query(By.css('.mat-select-trigger'));
+    const selectTrigger = fixture.debugElement.query(
+      By.css('.mat-select-trigger')
+    );
 
     selectTrigger.triggerEventHandler('click', {});
     fixture.detectChanges();
@@ -89,7 +94,9 @@ describe('ButtonsAreaComponent', () => {
   });
 
   it('should set selectedValue when select changed', async () => {
-    const selectTrigger = fixture.debugElement.query(By.css('.mat-select-trigger'));
+    const selectTrigger = fixture.debugElement.query(
+      By.css('.mat-select-trigger')
+    );
 
     selectTrigger.triggerEventHandler('click', {});
     fixture.detectChanges();
@@ -100,7 +107,9 @@ describe('ButtonsAreaComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(document.querySelector('.mat-select-value-text').textContent).toContain(options[1].textContent.trim());
+    expect(
+      document.querySelector('.mat-select-value-text').textContent
+    ).toContain(options[1].textContent.trim());
     expect(component.selectedAction).toContain(options[1].textContent.trim());
   });
 
@@ -114,6 +123,8 @@ describe('ButtonsAreaComponent', () => {
     await options[1].click();
 
     expect(await options[1].isSelected()).toBeTrue();
-    expect(component.selectedAction).toContain((await options[1].getText()).trim());
+    expect(component.selectedAction).toContain(
+      (await options[1].getText()).trim()
+    );
   });
 });

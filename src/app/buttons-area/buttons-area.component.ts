@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-buttons-area',
@@ -6,17 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./buttons-area.component.css']
 })
 export class ButtonsAreaComponent implements OnInit {
-  selectedAction = '';
+  @Input() actions = ['Save', 'Exit'];
+  @Input() isDisabled = false;
+  @Output() actionSelected = new EventEmitter<string>();
+  selectedAction: '';
 
-  actions = ['Save', 'Exit'];
+  constructor() {}
 
-  isDisabled = false;
+  ngOnInit() {}
 
-  constructor() { }
-
-  ngOnInit() { }
-
-  go() {
-    this.isDisabled = true;
+  triggerAction() {
+    this.actionSelected.emit(this.selectedAction);
   }
 }
