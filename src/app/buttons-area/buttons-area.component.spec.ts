@@ -33,7 +33,7 @@ describe('ButtonsAreaComponent', () => {
   it('should have a [GO] button', () => {
     const buttons = fixture.debugElement.queryAll(By.css('button'));
 
-    expect(buttons.length).toBe(2);
+    expect(buttons.length).toBe(1);
     expect(
       (buttons[0].nativeElement as HTMLButtonElement).textContent
     ).toContain('GO');
@@ -42,7 +42,7 @@ describe('ButtonsAreaComponent', () => {
   it('should have a [GO] button (harness)', async () => {
     const buttons = await loader.getAllHarnesses(MatButtonHarness);
 
-    expect(buttons.length).toBe(2);
+    expect(buttons.length).toBe(1);
     expect(await buttons[0].getText()).toContain('GO');
   });
 
