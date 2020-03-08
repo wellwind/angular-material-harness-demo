@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angular-material-harness-demo';
+  action: string;
+  getAction(action: string) {
+    this.action = action;
+  }
 }

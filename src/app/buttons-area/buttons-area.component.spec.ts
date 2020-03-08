@@ -127,4 +127,19 @@ describe('ButtonsAreaComponent', () => {
       (await options[1].getText()).trim()
     );
   });
+
+  it('should set selectedValue when select changed (harness)', async () => {
+    const select = await loader.getHarness(MatSelectHarness);
+
+    await select.open();
+
+    const options = await select.getOptions();
+
+    await options[1].click();
+
+    expect(await options[1].isSelected()).toBeTrue();
+    expect(component.selectedAction).toContain(
+      (await options[1].getText()).trim()
+    );
+  });
 });
